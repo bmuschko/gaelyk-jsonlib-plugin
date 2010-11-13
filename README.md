@@ -1,22 +1,33 @@
 # Gaelyk plugin providing JSON support via JSON-lib
 
-The plugin uses the [JSON-lib](http://json-lib.sourceforge.net/) libraries to provided JSON support in Gaelyk plugins.
-Additionally it add syntactic sugar on top of the Gaelyk APIs.
+The plugin uses the [JSON-lib](http://json-lib.sourceforge.net/) libraries to provide JSON support in Gaelyk plugins.
+Additionally, it adds syntactic sugar on top of the Gaelyk APIs.
 
 ## Installation
 
 To use the plugin in your Gaelyk application extract the distribution into your project directory. You should end up
-with multiple JAR files in your `war/WEB-INF/lib` and a plugin descriptor named `jsonLibPlugin.groovy` under `war/WEB-INF/plugins`.
+with multiple JAR files in your `war/WEB-INF/lib` directory and a plugin descriptor named `jsonLibPlugin.groovy` under `war/WEB-INF/plugins`.
 
-If you haven't created the file `war/WEB-INF/plugins.groovy` already please create it and add the following line to it:
+If you haven't created the file `war/WEB-INF/plugins.groovy` yet please create it and add the following line to it:
 
     install jsonLibPlugin
 
 ## Usage
 
+### Lazy Variables
+
+The plugin binds several lazy variables that are accessible in your views and controllers. First of all you can get information
+about the plugin itself:
+
+* plugins.json: a map variable with the following keys and names:
+** version: the plugin version
+** lib: a map variable with the following keys and names:
+*** name: the library name (here: JSON-lib)
+*** version: the library version
+
 Unfortunately, the `JsonGroovyBuilder` provided by JSON-lib has a [bug](http://sourceforge.net/tracker/?func=detail&aid=3022114&group_id=171425&atid=857928)
 which prevents it from building the JSON correctly from a Groovy script. This bug hasn't been fixed yet but the plugin
-provides the fix for it. You can access the [Groovy JSON builder](http://json-lib.sourceforge.net/groovy.html) in your Groovy templates and Groovlet
+provides a fix for it. You can access the [Groovy JSON builder](http://json-lib.sourceforge.net/groovy.html) in your Groovy templates and Groovlet
 by using the factory for it:
 
     jsonLibBuilderFactory.jsonLibBuilder
@@ -32,7 +43,9 @@ for more information.
         created = record.created.format("yyyy/MM/dd")
     }
 
-The plugin provides additional methods to the HttpServletRequest and HttpServletResponse objects. If you want to parse a
+### Parsing JSON
+
+The plugin provides additional methods to the `HttpServletRequest` and `HttpServletResponse` objects. If you want to parse a
 request parameter and convert it to an object.
 
     // json = {"name":"json","bool":true,"int":1,"double":2.2,"func":function(a){ return a; },"array":[1,2]}
@@ -58,7 +71,9 @@ String.
     def array = [1,2] as List
     assert array == object.array
 
-To render JSON in your response you can use the method `renderJson` on the HttpServletResponse object. As parameters you
+### Rendering JSON
+
+To render JSON in your response you can use the method `renderJson` on the `HttpServletResponse` object. As parameters you
 can use `JSONObject`, `JSONArray`, an object or a String. If you wish to change the encoding you can do so by adding it as
 second parameter. The default encoding is UTF-8. The content type for the response will automatically be set to
 `application/json`.
