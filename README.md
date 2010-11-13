@@ -19,11 +19,9 @@ If you haven't created the file `war/WEB-INF/plugins.groovy` yet please create i
 The plugin binds several lazy variables that are accessible in your views and controllers. First of all you can get information
 about the plugin itself:
 
-* plugins.json: a map variable with the following keys and names:
-** version: the plugin version
-** lib: a map variable with the following keys and names:
-*** name: the library name (here: JSON-lib)
-*** version: the library version
+* `plugins.json.version`: the plugin version
+* `plugins.json.lib.name`: the library name (here: JSON-lib)
+* `plugins.json.lib.version`: the library version
 
 Unfortunately, the `JsonGroovyBuilder` provided by JSON-lib has a [bug](http://sourceforge.net/tracker/?func=detail&aid=3022114&group_id=171425&atid=857928)
 which prevents it from building the JSON correctly from a Groovy script. This bug hasn't been fixed yet but the plugin
