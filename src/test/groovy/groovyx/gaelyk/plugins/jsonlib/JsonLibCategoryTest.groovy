@@ -29,7 +29,7 @@ class JsonLibCategoryTest {
 
     @Test
     void testParseJsonForRequestParameter() {
-        mockHttpServletRequest.setParameter "json", "{name=\"json\",bool:true,int:1,double:2.2,func:function(a){ return a; },array:[1,2]}"
+        mockHttpServletRequest.setParameter "json", "{\"name\":\"json\",\"bool\":true,\"int\":1,\"double\":2.2,\"func\":function(a){ return a; },\"array\":[1,2]}"
         Object object = mockHttpServletRequest.parseJson("json")
         assert "json" == object.name
         assert true == object.bool
@@ -42,7 +42,7 @@ class JsonLibCategoryTest {
 
     @Test
     void testParseJsonForJsonString() {
-        String jsonString = "{name=\"json\",bool:true,int:1,double:2.2,func:function(a){ return a; },array:[1,2]}"
+        String jsonString = "{\"name\":\"json\",\"bool\":true,\"int\":1,\"double\":2.2,\"func\":function(a){ return a; },\"array\":[1,2]}"
         Object object = jsonString.parseJson()
         assert "json" == object.name
         assert true == object.bool
