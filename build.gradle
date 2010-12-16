@@ -1,7 +1,14 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-version = '0.1'
+version = '0.2'
 defaultTasks 'clean', 'build'
+ant.property(environment: 'env')
+
+if(!ant.properties['env.GRADLE_HOME']) {
+    throw new Exception('Please set $GRADLE_HOME')
+}
+
+def gradleHomeDir = System.getenv().get('GRADLE_HOME')
 
 configurations {
     provided {
@@ -31,7 +38,7 @@ repositories {
 
 dependencies {
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.+'
-    compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.3', classifier: 'jdk15'
+    compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
     testCompile group: 'junit', name: 'junit', version: '4.+'
     testCompile group: 'org.springframework', name: 'spring-test', version: '3.+'
     testCompile group: 'org.springframework', name: 'spring-core', version: '3.+'
@@ -50,6 +57,18 @@ jar {
 
 ideaProject {
     javaVersion = '1.6'
+
+    withXml { provider ->
+        def node = provider.asNode()
+
+        // Use GIT
+        def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
+        vcsConfig.mapping[0].'@vcs' = 'Git'
+
+        // Set Gradle home
+        def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
+        gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradleHomeDir])
+    }
 }
 
 ideaModule {

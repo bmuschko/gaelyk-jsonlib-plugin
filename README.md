@@ -23,9 +23,7 @@ about the plugin itself:
 * `plugins.json.lib.name`: the library name (here: JSON-lib)
 * `plugins.json.lib.version`: the library version
 
-Unfortunately, the `JsonGroovyBuilder` provided by JSON-lib has a [bug](http://sourceforge.net/tracker/?func=detail&aid=3022114&group_id=171425&atid=857928)
-which prevents it from building the JSON correctly from a Groovy script. This bug hasn't been fixed yet but the plugin
-provides a fix for it. You can access the [Groovy JSON builder](http://json-lib.sourceforge.net/groovy.html) in your Groovy templates and Groovlet
+You can access the [Groovy JSON builder](http://json-lib.sourceforge.net/groovy.html) in your Groovy templates and Groovlet
 by using the factory for it:
 
     jsonLibBuilderFactory.jsonLibBuilder

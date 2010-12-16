@@ -10,10 +10,10 @@ binding {
     // Plugin library variables
     plugins = [
         json: [
-            version: "0.1",
+            version: "0.2",
             lib: [
                 name: "JSON-lib", 
-                version: "2.3"
+                version: "2.4"
             ]
         ]
     ]
