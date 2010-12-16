@@ -1,7 +1,9 @@
+import groovyx.gaelyk.logging.GroovyLogger
 import groovyx.gaelyk.plugins.jsonlib.JsonLibBuilderFactory
 import groovyx.gaelyk.plugins.jsonlib.JsonLibCategory
 
-println "Registering JSON-lib plugin..."
+def log = new GroovyLogger("jsonLibPlugin")
+log.info "Registering JSON-lib plugin..."
 
 binding {
     // Register JSON builder factory
